@@ -1162,7 +1162,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   return -1;
 }
 
-int smithy_fxn(struct gameState *state, int handPos, int currentPlayer) {
+void smithy_fxn(struct gameState *state, int handPos, int currentPlayer) {
       //+3 Cards
       int i;
       for (i = 0; i < 3; i++)
@@ -1172,10 +1172,9 @@ int smithy_fxn(struct gameState *state, int handPos, int currentPlayer) {
 			
       //discard card from hand
       discardCard(handPos, currentPlayer, state, 0);
-      return 0;
 }
 
-int adventurer_fxn(struct gameState *state, int currentPlayer, int temphand[]) {
+void adventurer_fxn(struct gameState *state, int currentPlayer, int temphand[]) {
       int drawntreasure=0;
       int cardDrawn;
       int z = 0;// this is the counter for the temp hand
@@ -1197,10 +1196,9 @@ int adventurer_fxn(struct gameState *state, int currentPlayer, int temphand[]) {
 	state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
 	z=z-1;
       }
-      return 0;
 }
 
-int village_fxn(struct gameState *state, int handPos, int currentPlayer) {
+void village_fxn(struct gameState *state, int handPos, int currentPlayer) {
       //+1 Card
       drawCard(currentPlayer, state);
 			
@@ -1209,10 +1207,9 @@ int village_fxn(struct gameState *state, int handPos, int currentPlayer) {
 			
       //discard played card from hand
       discardCard(handPos, currentPlayer, state, 0);
-      return 0;
 }
 
-int council_room_fxn(struct gameState *state, int handPos, int currentPlayer) {
+void council_room_fxn(struct gameState *state, int handPos, int currentPlayer) {
       //+4 Cards
       int i;
       for (i = 0; i < 4; i++)
@@ -1234,11 +1231,9 @@ int council_room_fxn(struct gameState *state, int handPos, int currentPlayer) {
 			
       //put played card in played card pile
       discardCard(handPos, currentPlayer, state, 0);
-			
-      return 0;
 }
 
-int great_hall_fxn(struct gameState *state, int handPos, int currentPlayer) {
+void great_hall_fxn(struct gameState *state, int handPos, int currentPlayer) {
       //+1 Card
       drawCard(currentPlayer, state);
 			
@@ -1247,8 +1242,6 @@ int great_hall_fxn(struct gameState *state, int handPos, int currentPlayer) {
 			
       //discard card from hand
       discardCard(handPos, currentPlayer, state, 0);
-      return 0;
-
 }
 
 int discardCard(int handPos, int currentPlayer, struct gameState *state, int trashFlag)
