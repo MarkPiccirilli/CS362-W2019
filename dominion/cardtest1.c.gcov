@@ -1,0 +1,64 @@
+        -:    0:Source:cardtest1.c
+        -:    0:Graph:cardtest1.gcno
+        -:    0:Data:cardtest1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:/**************************************
+        -:    2: * Title: adventurer function unit test
+        -:    3: * Author: Mark Piccirilli
+        -:    4: * Date: 2/8/19
+        -:    5: * Description: This is a unit test for the adventurer card
+        -:    6: * *******************************************/
+        -:    7:
+        -:    8:#include "dominion.h"
+        -:    9:#include "dominion_helpers.h"
+        -:   10:#include "rngs.h"
+        -:   11:#include <stdlib.h>
+        -:   12:#include <stdio.h>
+        -:   13:#include <string.h>
+        -:   14:
+        1:   15:int main() {
+        -:   16:
+        1:   17:	int numberOfPlayers = 2;
+        1:   18:	int currentPlayer = 0;
+        1:   19:	int kCards[10] = {curse, estate, province, adventurer, feast, gardens, smithy, minion, steward, salvager};
+        1:   20:	int seed = 1000;
+        -:   21:	struct gameState G, testG;
+        -:   22:	int i; //counters
+        1:   23:	int choice1 = 0, choice2 = 0, choice3 = 0, handpos = 0, bonus = 0;
+        1:   24:	int numTreasureBefore = 0;
+        1:   25:	int numTreasureAfter = 0;
+        -:   26:
+        -:   27:
+        1:   28:	initializeGame(numberOfPlayers,  kCards, seed, &G);
+        -:   29:
+        1:   30:	memcpy(&testG, &G, sizeof(struct gameState));
+        -:   31:	
+        1:   32:	printf("TESTING ADVENTURER CARD\n");
+        1:   33:	printf("\n");
+        -:   34:
+        1:   35:	cardEffect(adventurer, choice1, choice2, choice3, &testG, handpos, &bonus);
+        -:   36:
+        6:   37:	for(i = 0; i<G.deckCount[currentPlayer]; i++) {
+        5:   38:		if(G.deck[currentPlayer][i] == copper || testG.deck[currentPlayer][i] == silver || testG.deck[currentPlayer][i] == gold) {
+        3:   39:			numTreasureBefore++;
+        -:   40:		}
+        -:   41:	}
+        -:   42:
+        4:   43:	for(i = 0; i<testG.deckCount[currentPlayer]; i++) {
+        3:   44:		if(testG.deck[currentPlayer][i] == copper || testG.deck[currentPlayer][i] == silver || testG.deck[currentPlayer][i] == gold) {
+        1:   45:			numTreasureAfter++;
+        -:   46:		}
+        -:   47:	}
+        -:   48:
+        1:   49:	if(numTreasureBefore + 2 == numTreasureAfter) {
+    #####:   50:		printf("TREASURE CARD TEST PASSED\nActual number of treasure cards: %d\nExpected number of treasure cards: %d\n", numTreasureBefore + 2, numTreasureAfter);
+        -:   51:	}
+        -:   52:	else {
+        1:   53:		printf("TREASURE CARD TEST FAILED\nActual number of treasure cards: %d\nExpected number of treasure cards: %d\n", numTreasureBefore + 2, numTreasureAfter);
+        -:   54:	}
+        -:   55:
+        1:   56:	printf("\n");
+        -:   57:
+        1:   58:	return 0;
+        -:   59:}
