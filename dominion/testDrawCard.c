@@ -55,10 +55,12 @@ int main () {
   SelectStream(2);
   PutSeed(3);
 
+  //generate struct of random bytes (my notes)
   for (n = 0; n < 2000; n++) {
     for (i = 0; i < sizeof(struct gameState); i++) {
       ((char*)&G)[i] = floor(Random() * 256);
     }
+    //set critical variables to possible values (my notes)
     p = floor(Random() * 2);
     G.deckCount[p] = floor(Random() * MAX_DECK);
     G.discardCount[p] = floor(Random() * MAX_DECK);
