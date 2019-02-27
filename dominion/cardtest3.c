@@ -40,7 +40,7 @@ void villageCardTests(struct gameState G, struct gameState testG, int currentPla
 		printf("NUM ACTIONS TEST PASSED:\nactual numActions: %d\nexpected numActions: %d\n", testG.numActions, G.numActions + 2);
 	}
 	else {
-		printf("NUM ACTIONS TEST FAILED:\nactual numActions: %d\n, expected numActions: %d\n", testG.numActions, G.numActions + 2);
+		printf("NUM ACTIONS TEST FAILED:\nactual numActions: %d\nexpected numActions: %d\n", testG.numActions, G.numActions + 2);
 	}
 	printf("\n");
 	

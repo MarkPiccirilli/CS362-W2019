@@ -42,6 +42,8 @@ unittestresults: dominion.o rngs.o unittest1.c cardtest1.c
 	./cardtest2 >> unittestresults.out
 	gcc -o cardtest3 -g cardtest3.c dominion.o rngs.o $(CFLAGS)
 	./cardtest3 >> unittestresults.out
+	gcc -o cardtest4 -g cardtest4.c dominion.o rngs.o $(CFLAGS)
+	./cardtest4 >> unittestresults.out
 	gcov dominion.c -f >> unittestresults.out
 
 all: playdom player 
