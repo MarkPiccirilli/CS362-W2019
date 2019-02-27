@@ -81,8 +81,8 @@ void adventurerCardTests(struct gameState G, struct gameState testG, int current
 	printf("\n");
 	
 	//deckCount test
-	if(G.deckCount[currentPlayer] - 2 == testG.deckCount[currentPlayer]) {
-		printf("DECKCOUNT TEST PASSED\nActual handCount: %d\nExpected deckCount %d\n", testG.deckCount[currentPlayer], G.deckCount[currentPlayer] - 2);
+	if(G.deckCount[currentPlayer] - 2 >= testG.deckCount[currentPlayer]) {
+		printf("DECKCOUNT TEST PASSED\nActual deckCount: %d\nExpected deckCount %d\n", testG.deckCount[currentPlayer], G.deckCount[currentPlayer] - 2);
 	}
 	else {
 		printf("DECKCOUNT TEST FAILED\nActual deckCount: %d\nExpected deckCount %d\n", testG.deckCount[currentPlayer], G.deckCount[currentPlayer] - 2);
