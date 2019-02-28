@@ -105,6 +105,6 @@ int main() {
 	villageCardTests(G4, testG4, currentPlayer);
 	printf("\n");
 
-	printf("\n");
+	printf("\n\n");
 	return 0;
 }

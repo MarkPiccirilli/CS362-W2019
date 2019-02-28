@@ -2,7 +2,7 @@
  * Title: council room function unit test
  * Author: Mark Piccirilli
  * Date: 2/27/19
- * Description: This is a unit test for the village card
+ * Description: This is a unit test for the council room card
  * *******************************************/
 
 #include "dominion.h"
