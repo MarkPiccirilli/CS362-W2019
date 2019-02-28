@@ -71,7 +71,7 @@ int main() {
 		G.numPlayers = floor(Random() * MAX_PLAYERS);
 		currentPlayer = floor(Random() * G.numPlayers);
 		G.whoseTurn = currentPlayer;
-		G.numActions = floor(Random() * 3);
+		//G.numActions = floor(Random() * 3);
 		//deck count, discard count, hand count, and handpos must be set for all players since all players can draw cards
 		for(p=0; p<=G.numPlayers; p++) {
 			G.deckCount[p] = floor(Random() * MAX_DECK);
