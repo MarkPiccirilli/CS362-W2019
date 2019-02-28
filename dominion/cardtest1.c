@@ -152,10 +152,10 @@ int main() {
 	currentPlayer = 0;
 	initializeGame(numberOfPlayers,  kCards, seed, &G5);
 	G5.whoseTurn = currentPlayer;
-	G5.handCount[currentPlayer] = MAX_HAND;
+	G5.deckCount[currentPlayer] = MAX_DECK;
 	int i;
-	for(i=0; i<G5.handCount[currentPlayer]; i++) {
-		G5.hand[currentPlayer][i] = village;
+	for(i=0; i<G5.deckCount[currentPlayer]; i++) {
+		G5.deck[currentPlayer][i] = village;
 	}
 	memcpy(&testG5, &G5, sizeof(struct gameState));
 	cardEffect(adventurer, choice1, choice2, choice3, &testG5, handpos, &bonus);
