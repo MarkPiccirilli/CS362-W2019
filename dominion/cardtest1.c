@@ -32,10 +32,10 @@ void adventurerCardTests(struct gameState G, struct gameState testG, int current
 	}
 
 	if(numTreasureDeckBefore - 2 == numTreasureDeckAfter) {
-		printf("TREASURE CARDS IN DECK TEST PASSED\nActual number of treasure cards: %d\nExpected number of treasure cards: %d\n", numTreasureDeckBefore - 2, numTreasureDeckAfter);
+		printf("PASSED TREASURE CARDS IN DECK TEST\nActual number of treasure cards: %d\nExpected number of treasure cards: %d\n", numTreasureDeckBefore - 2, numTreasureDeckAfter);
 	}
 	else {
-		printf("TREASURE CARDS IN DECK TEST FAILED\nActual number of treasure cards: %d\nExpected number of treasure cards: %d\n", numTreasureDeckBefore - 2, numTreasureDeckAfter);
+		printf("FAILED TREASURE CARDS IN DECK TEST\nActual number of treasure cards: %d\nExpected number of treasure cards: %d\n", numTreasureDeckBefore - 2, numTreasureDeckAfter);
 	}
 
 	printf("\n");
@@ -54,38 +54,38 @@ void adventurerCardTests(struct gameState G, struct gameState testG, int current
 	}
 
 	if(numTreasureHandBefore + 2 == numTreasureHandAfter) {
-		printf("TREASURE CARDS IN HAND TEST PASSED\nActual number of treasure cards: %d\nExpected number of treasure cards: %d\n", numTreasureHandBefore + 2, numTreasureHandAfter);
+		printf("PASSED TREASURE CARDS IN HAND TEST\nActual number of treasure cards: %d\nExpected number of treasure cards: %d\n", numTreasureHandBefore + 2, numTreasureHandAfter);
 	}
 	else {
-		printf("TREASURE CARDS IN HAND TEST FAILED\nActual number of treasure cards: %d\nExpected number of treasure cards: %d\n", numTreasureHandBefore + 2, numTreasureHandAfter);
+		printf("FAILED TREASURE CARDS IN HAND TEST\nActual number of treasure cards: %d\nExpected number of treasure cards: %d\n", numTreasureHandBefore + 2, numTreasureHandAfter);
 	}
 
 	printf("\n");
 
 	//handCount test
 	if(G.handCount[currentPlayer] + 2 == testG.handCount[currentPlayer]) {
-		printf("HANDCOUNT TEST PASSED\nActual handCount: %d\nExpected handCount %d\n", testG.handCount[currentPlayer], G.handCount[currentPlayer] + 2);
+		printf("PASSED HANDCOUNT TEST\nActual handCount: %d\nExpected handCount %d\n", testG.handCount[currentPlayer], G.handCount[currentPlayer] + 2);
 	}
 	else {
-		printf("HANDCOUNT TEST FAILED\nActual handCount: %d\nExpected handCount %d\n", testG.handCount[currentPlayer], G.handCount[currentPlayer] + 2);
+		printf("FAILED HANDCOUNT TEST\nActual handCount: %d\nExpected handCount %d\n", testG.handCount[currentPlayer], G.handCount[currentPlayer] + 2);
 	}
 	printf("\n");
 
 	//discardCount test
 	if(G.discardCount[currentPlayer] <= testG.discardCount[currentPlayer]) {
-		printf("DISCARDCOUNT TEST PASSED\nInitial discardCount: %d\nAfter discardCount %d\n", G.discardCount[currentPlayer], testG.discardCount[currentPlayer]);
+		printf("PASSED DISCARDCOUNT TEST\nInitial discardCount: %d\nAfter discardCount %d\n", G.discardCount[currentPlayer], testG.discardCount[currentPlayer]);
 	}
 	else {
-		printf("DISCARDCOUNT TEST FAILED\nInitial discardCount: %d\nAfter discardCount %d\n", G.discardCount[currentPlayer], testG.discardCount[currentPlayer]);
+		printf("FAILED DISCARDCOUNT TEST\nInitial discardCount: %d\nAfter discardCount %d\n", G.discardCount[currentPlayer], testG.discardCount[currentPlayer]);
 	}
 	printf("\n");
 	
 	//deckCount test
 	if(G.deckCount[currentPlayer] - 2 >= testG.deckCount[currentPlayer]) {
-		printf("DECKCOUNT TEST PASSED\nActual deckCount: %d\nExpected deckCount %d\n", testG.deckCount[currentPlayer], G.deckCount[currentPlayer] - 2);
+		printf("PASSED DECKCOUNT TEST\nActual deckCount: %d\nExpected deckCount %d\n", testG.deckCount[currentPlayer], G.deckCount[currentPlayer] - 2);
 	}
 	else {
-		printf("DECKCOUNT TEST FAILED\nActual deckCount: %d\nExpected deckCount %d\n", testG.deckCount[currentPlayer], G.deckCount[currentPlayer] - 2);
+		printf("FAILED DECKCOUNT TEST\nActual deckCount: %d\nExpected deckCount %d\n", testG.deckCount[currentPlayer], G.deckCount[currentPlayer] - 2);
 	}
 
 }
@@ -106,6 +106,7 @@ int main() {
 	numberOfPlayers = 4;
 	currentPlayer = 0;
 	initializeGame(numberOfPlayers,  kCards, seed, &G1);
+	G1.whoseTurn = currentPlayer;
 	memcpy(&testG1, &G1, sizeof(struct gameState));
 	cardEffect(adventurer, choice1, choice2, choice3, &testG1, handpos, &bonus);
 	adventurerCardTests(G1, testG1, currentPlayer);
@@ -116,6 +117,7 @@ int main() {
 	numberOfPlayers = 2;
 	currentPlayer = 1;
 	initializeGame(numberOfPlayers,  kCards, seed, &G2);
+	G2.whoseTurn = currentPlayer;
 	memcpy(&testG2, &G2, sizeof(struct gameState));
 	cardEffect(adventurer, choice1, choice2, choice3, &testG2, handpos, &bonus);
 	adventurerCardTests(G2, testG2, currentPlayer);
@@ -126,6 +128,7 @@ int main() {
 	numberOfPlayers = 4;
 	currentPlayer = 2;
 	initializeGame(numberOfPlayers,  kCards, seed, &G3);
+	G3.whoseTurn = currentPlayer;
 	memcpy(&testG3, &G3, sizeof(struct gameState));
 	cardEffect(adventurer, choice1, choice2, choice3, &testG3, handpos, &bonus);
 	adventurerCardTests(G3, testG3, currentPlayer);
@@ -137,6 +140,7 @@ int main() {
 	numberOfPlayers = 3;
 	currentPlayer = 0;
 	initializeGame(numberOfPlayers,  kCards, seed, &G4);
+	G4.whoseTurn = currentPlayer;
 	memcpy(&testG4, &G4, sizeof(struct gameState));
 	cardEffect(adventurer, choice1, choice2, choice3, &testG4, handpos, &bonus);
 	adventurerCardTests(G4, testG4, currentPlayer);
@@ -147,6 +151,12 @@ int main() {
 	numberOfPlayers = 2;
 	currentPlayer = 0;
 	initializeGame(numberOfPlayers,  kCards, seed, &G5);
+	G5.whoseTurn = currentPlayer;
+	G5.handCount[currentPlayer] = MAX_HAND;
+	int i;
+	for(i=0; i<G5.handCount[currentPlayer]; i++) {
+		G5.hand[currentPlayer][i] = village;
+	}
 	memcpy(&testG5, &G5, sizeof(struct gameState));
 	cardEffect(adventurer, choice1, choice2, choice3, &testG5, handpos, &bonus);
 	adventurerCardTests(G5, testG5, currentPlayer);

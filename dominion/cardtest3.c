@@ -16,10 +16,10 @@ void villageCardTests(struct gameState G, struct gameState testG, int currentPla
 	//handCount test
 	//1 cards added, one dicarded
 	if(G.handCount[currentPlayer] == testG.handCount[currentPlayer]) {
-		printf("HANDCOUNT TEST PASSED\nActual handCount: %d\nExpected handCount %d\n", testG.handCount[currentPlayer], G.handCount[currentPlayer]);
+		printf("PASSED HANDCOUNT TEST:\nActual handCount: %d\nExpected handCount %d\n", testG.handCount[currentPlayer], G.handCount[currentPlayer]);
 	}
 	else {
-		printf("HANDCOUNT TEST FAILED\nActual handCount: %d\nExpected handCount %d\n", testG.handCount[currentPlayer], G.handCount[currentPlayer]);
+		printf("FAILED HANDCOUNT TEST:\nActual handCount: %d\nExpected handCount %d\n", testG.handCount[currentPlayer], G.handCount[currentPlayer]);
 	}
 	printf("\n");
 	
@@ -27,30 +27,30 @@ void villageCardTests(struct gameState G, struct gameState testG, int currentPla
 	//card drawn should be first card in hand
 	printf("Note: DECK TO HAND tests could be missleading if the same card exists several times in a row in the deck\n");
 	if(G.deck[currentPlayer][G.deckCount[currentPlayer] - 1] == testG.hand[currentPlayer][testG.handCount[currentPlayer] - 1]) {
-		printf("DECK TO HAND TEST PASSED: deck card drawn is in correct hand positon\n");
+		printf("PASSED DECK TO HAND TEST: deck card drawn is in correct hand positon\n");
 	}
 	else {
-		printf("DECK TO HAND TEST FAILED: deck card drawn in not in correct hand position.\n");
+		printf("FAILED DECK TO HAND TEST: deck card drawn in not in correct hand position.\n");
 	}
 	printf("\n");
 
 	//numActions test
 	//numActions should be increased by two
 	if(G.numActions + 2 == testG.numActions) {
-		printf("NUM ACTIONS TEST PASSED:\nactual numActions: %d\nexpected numActions: %d\n", testG.numActions, G.numActions + 2);
+		printf("PASSED NUM ACTIONS TEST:\nactual numActions: %d\nexpected numActions: %d\n", testG.numActions, G.numActions + 2);
 	}
 	else {
-		printf("NUM ACTIONS TEST FAILED:\nactual numActions: %d\nexpected numActions: %d\n", testG.numActions, G.numActions + 2);
+		printf("FAILED NUM ACTIONS TEST:\nactual numActions: %d\nexpected numActions: %d\n", testG.numActions, G.numActions + 2);
 	}
 	printf("\n");
 	
 	//playedCardCount test
 	//one card sould be added to played card count
 	if(G.playedCardCount + 1 == testG.playedCardCount) {
-		printf("PLAYED CARD COUNT COUNT TEST PASSED:\nactual playedCardCount: %d\nexpected playedCardCount: %d", testG.playedCardCount, G.playedCardCount + 1);
+		printf("PASSED PLAYED CARD COUNT COUNT TEST:\nactual playedCardCount: %d\nexpected playedCardCount: %d", testG.playedCardCount, G.playedCardCount + 1);
 	}
 	else {
-		printf("PLAYED CARD COUNT COUNT TEST FAILED:\nactual playedCardCount: %d\nexpected playedCardCount: %d", testG.playedCardCount, G.playedCardCount + 1);
+		printf("FAILED PLAYED CARD COUNT COUNT TEST:\nactual playedCardCount: %d\nexpected playedCardCount: %d", testG.playedCardCount, G.playedCardCount + 1);
 	}
 	printf("\n");
 }
@@ -70,6 +70,7 @@ int main() {
 	numberOfPlayers = 4;
 	currentPlayer = 0;
 	initializeGame(numberOfPlayers,  kCards, seed, &G1);
+	G1.whoseTurn = currentPlayer;
 	memcpy(&testG1, &G1, sizeof(struct gameState));
 	cardEffect(village, choice1, choice2, choice3, &testG1, handpos, &bonus);
 	villageCardTests(G1, testG1, currentPlayer);
@@ -80,6 +81,7 @@ int main() {
 	numberOfPlayers = 2;
 	currentPlayer = 0;
 	initializeGame(numberOfPlayers,  kCards, seed, &G2);
+	G2.whoseTurn = currentPlayer;
 	memcpy(&testG2, &G2, sizeof(struct gameState));
 	cardEffect(village, choice1, choice2, choice3, &testG2, handpos, &bonus);
 	villageCardTests(G2, testG2, currentPlayer);
@@ -90,16 +92,18 @@ int main() {
 	numberOfPlayers = 2;
 	currentPlayer = 1;
 	initializeGame(numberOfPlayers,  kCards, seed, &G3);
+	G3.whoseTurn = currentPlayer;
 	memcpy(&testG3, &G3, sizeof(struct gameState));
 	cardEffect(village, choice1, choice2, choice3, &testG3, handpos, &bonus);
 	villageCardTests(G3, testG3, currentPlayer);
 	printf("\n");
 
-	printf("TEST 4: 1 PLAYERS, CURRENT PLAYER = 0\n\n");
+	printf("TEST 4: 3 PLAYERS, CURRENT PLAYER = 1\n\n");
 	struct gameState G4, testG4;
-	numberOfPlayers = 1;
-	currentPlayer = 0;
+	numberOfPlayers = 3;
+	currentPlayer = 1;
 	initializeGame(numberOfPlayers,  kCards, seed, &G4);
+	G4.whoseTurn = currentPlayer;
 	memcpy(&testG4, &G4, sizeof(struct gameState));
 	cardEffect(village, choice1, choice2, choice3, &testG4, handpos, &bonus);
 	villageCardTests(G4, testG4, currentPlayer);
