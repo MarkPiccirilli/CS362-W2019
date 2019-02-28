@@ -40,6 +40,8 @@ unittestresults: dominion.o rngs.o unittest1.c cardtest1.c
 	./unittest2 >> unittestresults.out
 	gcc -o unittest3 -g unittest3.c dominion.o rngs.o $(CFLAGS)
 	./unittest3 >> unittestresults.out
+	gcc -o unittest4 -g unittest4.c dominion.o rngs.o $(CFLAGS)
+	./unittest4 >> unittestresults.out
 	gcc -o cardtest1 -g cardtest1.c dominion.o rngs.o $(CFLAGS)
 	./cardtest1 >> unittestresults.out
 	gcc -o cardtest2 -g cardtest2.c dominion.o rngs.o $(CFLAGS)
