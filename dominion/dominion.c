@@ -1178,7 +1178,9 @@ void adventurer_fxn(struct gameState *state, int currentPlayer, int temphand[]) 
       int drawntreasure=0;
       int cardDrawn;
       int z = 1;// this is the counter for the temp hand
+	int iter = 0;
       while(drawntreasure<2){
+	      iter++;
 	if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
 	  shuffle(currentPlayer, state);
 	}

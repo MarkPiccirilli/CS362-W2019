@@ -44,9 +44,9 @@ randomtestcard2: randomtestcard2.c dominion.o rngs.o
 	gcov dominion.c -f -b >> randomtestcard2.out
 
 randomtestadventurer: randomtestadventurer.c dominion.o rngs.o
-	gcc -o randomtestadventurer -g randomtestadventurer.c dominion.o rngs.o $(CFLAGS)
-	./randomtestadventurer > randomtestadventurer.out
-	gcov dominion.c -f -b >> randomtestadventurer.out
+	gcc -o randomtestadventurer -g -D_XOPEN_SOURCE randomtestadventurer.c dominion.o rngs.o $(CFLAGS)
+	#./randomtestadventurer > randomtestcard2.out
+	#gcov dominion.c -f -b >> randomtestadventurer.out
 
 all: playdom player 
 
