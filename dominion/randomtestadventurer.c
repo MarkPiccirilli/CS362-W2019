@@ -5,7 +5,7 @@
  * Description: This program performs random testing on the adventure card
  * **************************************************/
 
-#define _XOPEN_SOURCE
+//#define _XOPEN_SOURCE
 
 #include "dominion.h"
 #include "dominion_helpers.h"
@@ -16,21 +16,24 @@
 #include <signal.h>
 #include <stdlib.h>
 
+/*
 int SEGFAULT = 0;
-int calls = 0;
 
 void catch_SIGSEGV(int sig_num) {
 	SEGFAULT = 1;
 	printf("segfault");
 }
+*/
 
 int checkAdventurerCard(struct gameState* G, int currentPlayer, int handPos) {
-	
+
+	/*	
 	//set up sigaction struct to catch segfault
 	struct sigaction *sa;
 	sa = malloc(sizeof(struct sigaction));
 	sa->sa_handler = catch_SIGSEGV;
-	//sigaction(SIGSEGV, sa, NULL);
+	sigaction(SIGSEGV, sa, NULL);
+	*/
 
 	//these variables are needed for the cardEffect function, but are not useed by the village card
 	int choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
@@ -38,6 +41,8 @@ int checkAdventurerCard(struct gameState* G, int currentPlayer, int handPos) {
 	struct gameState testG;
 	int topCard, topIndex;
 	int treasure = 0;
+	int temphand[MAX_HAND];
+	int count = 0;	
 
 
 	memcpy(&testG, G, sizeof(struct gameState));
@@ -45,27 +50,21 @@ int checkAdventurerCard(struct gameState* G, int currentPlayer, int handPos) {
 	//run cardEffect with input variables
 	int testReturn;
 	testReturn = cardEffect(adventurer, choice1, choice2, choice3, &testG, handPos, &bonus);
-	calls++;
 
 	//create expected cardEffect behavior for adventurer card
-	/*
+		
 	while(treasure < 2) {
-		//printf("test1");
-		if(SEGFAULT == 1) {
-			printf("Segmentation Fault");
-			exit(1);
-		}
+
+		//if(SEGFAULT == 1) {
+		//	printf("Segmentation Fault");
+		//}
+
 		if(G->deckCount[currentPlayer] < 1) {
-			//printf("test");
-			//G->deck[currentPlayer][0] = silver;
-			//G->deck[currentPlayer][1] = silver;
-			//G->deckCount[currentPlayer] += 2;
-			break;
+			shuffle(currentPlayer, G);
 		}
 		drawCard(currentPlayer, G);
 		topIndex = G->handCount[currentPlayer] - 1;
 		topCard = G->hand[currentPlayer][topIndex];
-		printf("%d", topCard);
 		if(topCard == copper) {
 			treasure++;
 		}
@@ -76,40 +75,17 @@ int checkAdventurerCard(struct gameState* G, int currentPlayer, int handPos) {
 			treasure++;
 		}
 		else {
-			G->discard[currentPlayer][G->discardCount[currentPlayer]++] = topCard;
+			temphand[count] = topCard;
 			G->handCount[currentPlayer]--;
+			count++;
 		}
 	}
-	*/
-	//
-	//
-	//actual code
-	int z = 0;
-	int temphand[MAX_HAND];
-	int cardDrawn;
-	int drawntreasure = 0;
-	 while(drawntreasure<2){
-		if (G->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
-			shuffle(currentPlayer, G);
-		}
-		drawCard(currentPlayer, G);
-		cardDrawn = G->hand[currentPlayer][G->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
-		if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
-			drawntreasure++;
-		else{
-			temphand[z]=cardDrawn;
-			G->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
-			z++;
-		}
+	while(count > 0) {
+		G->discard[currentPlayer][G->discardCount[currentPlayer]++] = temphand[count - 1];
+		count--;
 	}
-	while(z-1>=0){
-		G->discard[currentPlayer][G->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
-		z=z-1;
-	}
-	//
-	//
-	//
-
+	
+	//check result
 	if(memcmp(&testG, G, sizeof(struct gameState)) == 0) {
 		return 0;
 	}
@@ -151,9 +127,11 @@ int main() {
 		for(i=0; i<G.handCount[currentPlayer]; i++) {
 			G.hand[currentPlayer][i] = floor(Random() * 26);
 		}
+		for(i=0; i<G.discardCount[currentPlayer]; i++) {
+			G.discard[currentPlayer][i] = floor(Random() * 26);
+		}
 
 		//run test
-		printf("test");
 		if(checkAdventurerCard(&G, currentPlayer, handpos) == 0) {
 			numberPassed++;
 		}
@@ -164,5 +142,6 @@ int main() {
 
 	printf("Number of tests passed: %d\n", numberPassed);
 	printf("Number of tests failed: %d\n", numberFailed);
+	printf("\n\n");
 	return 0;
 }
