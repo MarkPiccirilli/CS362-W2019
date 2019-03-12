@@ -33,7 +33,6 @@ runtests: testDrawCard
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 
-<<<<<<< HEAD
 randomtestcard1: randomtestcard1.c dominion.o rngs.o
 	gcc -o randomtestcard1 -g randomtestcard1.c dominion.o rngs.o $(CFLAGS)
 	./randomtestcard1 > randomtestcard1.out
@@ -48,7 +47,7 @@ randomtestadventurer: randomtestadventurer.c dominion.o rngs.o
 	gcc -o randomtestadventurer -g -D_XOPEN_SOURCE randomtestadventurer.c dominion.o rngs.o $(CFLAGS)
 	./randomtestadventurer > randomtestadventurer.out
 	gcov dominion.c -f -b >> randomtestadventurer.out
-=======
+
 unittestresults: dominion.o rngs.o unittest1.c cardtest1.c
 	gcc -o unittest1 -g unittest1.c dominion.o rngs.o $(CFLAGS)
 	./unittest1 > unittestresults.out
@@ -67,7 +66,6 @@ unittestresults: dominion.o rngs.o unittest1.c cardtest1.c
 	gcc -o cardtest4 -g cardtest4.c dominion.o rngs.o $(CFLAGS)
 	./cardtest4 >> unittestresults.out
 	gcov dominion.c -f -b >> unittestresults.out
->>>>>>> piccirim-assignment-3
 
 all: playdom player 
 

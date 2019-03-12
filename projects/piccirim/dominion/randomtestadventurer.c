@@ -21,13 +21,13 @@ int SEGFAULT = 0;
 
 void catch_SIGSEGV(int sig_num) {
 	SEGFAULT = 1;
-	//printf("segfault");
+	printf("segfault");
 }
 */
 
 int checkAdventurerCard(struct gameState* G, int currentPlayer, int handPos) {
 
-	/*
+	/*	
 	//set up sigaction struct to catch segfault
 	struct sigaction *sa;
 	sa = malloc(sizeof(struct sigaction));
@@ -54,6 +54,10 @@ int checkAdventurerCard(struct gameState* G, int currentPlayer, int handPos) {
 	//create expected cardEffect behavior for adventurer card
 		
 	while(treasure < 2) {
+
+		//if(SEGFAULT == 1) {
+		//	printf("Segmentation Fault");
+		//}
 
 		if(G->deckCount[currentPlayer] < 1) {
 			shuffle(currentPlayer, G);

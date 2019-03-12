@@ -3,7 +3,16 @@
 #include "rngs.h"
 #include <stdio.h>
 #include <math.h>
+#include <signal.h>
 #include <stdlib.h>
+
+int SEGFAULT = 0;
+
+void catch_SIGSEGV(int sig_num) {
+	SEGFAULT = 1;
+	//printf("segfault");
+}
+
 
 int compare(const void* a, const void* b) {
   if (*(int*)a > *(int*)b)
@@ -648,7 +657,7 @@ int getCost(int cardNumber)
 smithyRefactor(int currentPlayer, struct gameState *state, int handPos)
 {
 	 int i;
-      for (i = 0; i < handPos; i++)
+      for (i = 0; i < 3; i++)
 	{
 	  drawCard(currentPlayer, state);
 	}
@@ -657,21 +666,29 @@ smithyRefactor(int currentPlayer, struct gameState *state, int handPos)
       return 0;
 }
 
-adventurerRefactor(int drawntreasure, struct gameState *state, int currentPlayer, int cardDrawn, int temphand, int *z)
+//changed int temphand to int temphand[] during debugging process
+//changed int z* to int z during debugging process
+adventurerRefactor(int drawntreasure, struct gameState *state, int currentPlayer, int cardDrawn, int temphand[], int z)
 {
+	//set up sigaction struct to catch segfault
+	struct sigaction *sa;
+	sa = malloc(sizeof(struct sigaction));
+	sa->sa_handler = catch_SIGSEGV;
+	sigaction(SIGSEGV, sa, NULL);
+
 	while(drawntreasure<2){
-	if (state->deckCount[currentPlayer] <1){
-	  shuffle(currentPlayer, state);
-	}
-	drawCard(currentPlayer, state);
-	cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];
-	if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
-	  drawntreasure++;
-	else{
-	  temphand[z]=cardDrawn;
-	  state->handCount[currentPlayer]--;
-	  z=0;
-	}
+		if (state->deckCount[currentPlayer] <1){
+		  shuffle(currentPlayer, state);
+		}
+		drawCard(currentPlayer, state);
+		cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];
+		if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold)
+		  drawntreasure++;
+		else{
+		  temphand[z]=cardDrawn;
+		  state->handCount[currentPlayer]--;
+		  z++;
+		}
       }
       while(z-1>=0){
 	state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1];
@@ -684,7 +701,7 @@ int council_roomRefactor(int currentPlayer, struct gameState *state, int handPos
 {
 	int i;
 
-      for (i = 0; i < 5; i++)
+      for (i = 0; i < 4; i++)
 	{
 	  drawCard(currentPlayer, state);
 	}
@@ -819,10 +836,13 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card )
     {
     case adventurer:
-      adventurerRefactor(drawntreasure, state, currentPlayer, cardDrawn, temphand, &z);
+    	//return keyword added during testing to fix bug
+	//changes &z to z during debugging process
+      return adventurerRefactor(drawntreasure, state, currentPlayer, cardDrawn, temphand, z);
 
     case council_room:
-      council_roomRefactor(currentPlayer, state, handPos);
+    	//return keyword added during testing to fix bug
+	return council_roomRefactor(currentPlayer, state, handPos);
 
     case feast:
 		return feastRefactor(currentPlayer, state, &temphand, choice1);
