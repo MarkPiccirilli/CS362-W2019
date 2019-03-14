@@ -9,7 +9,7 @@ public class manualTest {
 		System.out.println("Enter URL: ");
 		String url = s.next();
 
-		UrlValidator url_val = new UrlValidator();
+		UrlValidator url_val = new UrlValidator(UrlValidator.ALLOW_LOCAL_URLS);
 
 		boolean a = url_val.isValid(url);
 
