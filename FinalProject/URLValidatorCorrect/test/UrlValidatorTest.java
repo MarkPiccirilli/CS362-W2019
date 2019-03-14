@@ -1,6 +1,7 @@
 
 
 import junit.framework.TestCase;
+import java.util.Random;
 
 //You can use this as a skeleton for your 3 different test approach
 //It is an optional to use this file, you can generate your own test file(s) to test the target function!
@@ -19,12 +20,13 @@ public class UrlValidatorTest extends TestCase {
 
    
    
-	public void testManualTest()
+	public void testUnitTest()
 	{
-//You can use this function to implement your manual testing
+		System.out.println("\n\nUnit Tests:\n");
+		
 		//default Constructor validator used throughout testing
 		UrlValidator url_validator_default = new UrlValidator();
-		//manual url testing with default constructor
+		//unit url testing with default constructor
 		//should return true
 		String URLTrue[] = {"http://www.google.com",
 							"http://www.amazon.com",
@@ -41,7 +43,9 @@ public class UrlValidatorTest extends TestCase {
 		//should return false
 		String URLFalse[] = {"djgljaldkf",
 				"zon.com",
-				"http://"
+				"http://",
+				"www.google.com",
+				"ebay.com"
 				};
 		for(int i=0; i<URLFalse.length; i++) {
 			try {
@@ -52,7 +56,7 @@ public class UrlValidatorTest extends TestCase {
 			}
 		}
 		
-		//manual scheme testing with default constructor
+		//unit scheme testing with default constructor
 		//should return true
 		String SchemeTrue[] = {"ftp", "http", "https"};
 		for(int i=0; i<SchemeTrue.length; i++) {
@@ -74,7 +78,7 @@ public class UrlValidatorTest extends TestCase {
 			}
 		}
 		
-		//manual scheme testing with scheme overload constructor
+		//unit scheme testing with scheme overload constructor
 		//should return true
 		String SchemeTrue2[] = {"http", "https"};
 		//constructor used for this test and next test
@@ -98,7 +102,7 @@ public class UrlValidatorTest extends TestCase {
 			}
 		}
 		
-		//manual authority testing with default constructor
+		//unit authority testing with default constructor
 		//should return true
 		String AuthorityTrue[] = {"www.google.com", "www.mark.com"};
 		for(int i=0; i<AuthorityTrue.length; i++) {
@@ -120,7 +124,7 @@ public class UrlValidatorTest extends TestCase {
 			}
 		}
 		
-		//manual path testing with default constructor
+		//unit path testing with default constructor
 		//should return true
 		String PathTrue[] = {"/test", "/test123", "", "/test/hello"};
 		for(int i=0; i<PathTrue.length; i++) {
@@ -164,7 +168,7 @@ public class UrlValidatorTest extends TestCase {
 					}
 				}
 		
-		//manual query testing with default constructor
+		//unit query testing with default constructor
 		String QueryTrue[] = {"", "?action=edit", "?action=view&mode=down"};
 		for(int i=0; i<QueryTrue.length; i++) {
 			try {
@@ -174,7 +178,7 @@ public class UrlValidatorTest extends TestCase {
 				System.out.format("FAILED query test %d\n", i + 1);
 			}
 		}
-		//manual fragment testing
+		//unit fragment testing
 		//all fragments should be allowed for default constructor
 		String FragmentTrue[] = {"", "kdajfsilj", "1234"};
 		for(int i=0; i < FragmentTrue.length; i++) {
@@ -198,22 +202,101 @@ public class UrlValidatorTest extends TestCase {
 		}
 	}
    
-   
-	public void testYourFirstPartition()
+	public void testRandomTest()
+   	{
+	   	int numberOfTests = 20;
+	   	System.out.println("\n\nRandom Tests:\n");
+	   	for(int i=0; i<numberOfTests; i++) {
+		   	RandomTest();
+	   	}
+	   
+   	}
+	
+	public void RandomTest()
 	{
-	 //You can use this function to implement your First Partition testing	   
-
-	}
-   
-	public void testYourSecondPartition(){
-		 //You can use this function to implement your Second Partition testing	   
-
-	}
-	//You need to create more test cases for your Partitions if you need to 
-   
-	public void testIsValid()
-	{
-		//You can use this function for programming based testing
-
+		//create random object
+		Random rand = new Random();
+		
+		//select random scheme
+		String schemes[] = {"http", "https", "ftp", ""};
+		String scheme = schemes[rand.nextInt(schemes.length)];
+		
+		//select schemes for constructor
+		boolean arr[] = new boolean[schemes.length];
+		int count = 0;
+		for(int i=0; i<schemes.length; i++) {
+			arr[i] = rand.nextBoolean();
+			if(arr[i] == true) {
+				count++;
+			}
+		}
+		String constructor_schemes[] = new String[count];
+		int c = 0;
+		for(int i = 0; i < arr.length; i++) {
+			if(arr[i] == true) {
+				constructor_schemes[c] = schemes[i];
+				c++;
+			}
+		}
+		//select random authority
+		String authorities[] = {"ebay.com", "www.google.com", "www.gmail.com", "leo.com", "localhost"};
+		String authority = authorities[rand.nextInt(authorities.length)]; 
+		
+		//select random path
+		String paths[] = {"/test", "/test123", "", "/test/hello"};
+		String path = paths[rand.nextInt(paths.length)];
+		//select random select random query
+		String queries[] = {"", "action=edit", "action=view&mode=down"};
+		String query = queries[rand.nextInt(queries.length)];
+		
+		//concatonate strings to build url
+		String url;
+		if(scheme == "") {
+			url = authority + path + "?" + query;
+		}
+		else {
+			url = scheme + "://" + authority + path + "?" + query;
+		}
+		//select random options
+		boolean allow2Slashes = rand.nextBoolean();
+		boolean allowAllSchemes = rand.nextBoolean();
+		boolean allowLocalUrls = rand.nextBoolean();
+		boolean noFragments = rand.nextBoolean();
+		long options = 0;
+		if(allow2Slashes) {
+			options = options + UrlValidator.ALLOW_2_SLASHES;
+		}
+		if(allowAllSchemes) {
+			options = options + UrlValidator.ALLOW_ALL_SCHEMES;
+		}
+		if(allowLocalUrls) {
+			options = options + UrlValidator.ALLOW_LOCAL_URLS;
+		}
+		if(noFragments) {
+			options = options + UrlValidator.NO_FRAGMENTS;
+		}
+		
+		//run constructor
+		UrlValidator url_randomValidator;
+		if(options == 0 & constructor_schemes.length == 0) {
+			url_randomValidator = new UrlValidator();
+		}
+		else if(options == 0) {
+			url_randomValidator = new UrlValidator(constructor_schemes);
+		}
+		else if(constructor_schemes.length == 0) {
+			url_randomValidator = new UrlValidator(options);
+		}
+		else {
+			url_randomValidator = new UrlValidator(constructor_schemes, options);
+		}
+		
+		//test url with isValid method of randomly generated constructor
+		try {
+			assertTrue(url_randomValidator.isValid(url));
+			System.out.format("TRUE: %s\n", url);
+		} catch(AssertionError | ExceptionInInitializerError | NoClassDefFoundError a) {
+			System.out.format("FALSE: %s\n", url);
+		}
 	}
 }
