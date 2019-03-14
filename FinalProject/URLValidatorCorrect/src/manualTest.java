@@ -1,3 +1,5 @@
+//manual test
+
 import java.util.Scanner;
 
 public class manualTest {
