@@ -851,7 +851,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return -1;
 
     case mine:
-		mineRefactor(currentPlayer, state, choice2, choice1, handPos);
+		return mineRefactor(currentPlayer, state, choice2, choice1, handPos);
 
     case remodel:
       j = state->hand[currentPlayer][choice1];  //store card we will trash
@@ -878,7 +878,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 
     case smithy:
-     smithyRefactor(currentPlayer, state, handPos);
+     return smithyRefactor(currentPlayer, state, handPos);
 
     case village:
       //+1 Card

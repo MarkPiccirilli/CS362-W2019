@@ -154,22 +154,7 @@ int main() {
 	adventurerCardTests(G4, testG4, currentPlayer);
 	printf("\n");
 
-	printf("TEST 5: 2 PLAYERS, CURRENT PLAYER = 0\n");
-	struct gameState G5, testG5;
-	numberOfPlayers = 2;
-	currentPlayer = 0;
-	initializeGame(numberOfPlayers,  kCards, seed, &G5);
-	G5.whoseTurn = currentPlayer;
-	G5.deckCount[currentPlayer] = MAX_DECK;
-	int i;
-	for(i=0; i<G5.deckCount[currentPlayer]; i++) {
-		G5.deck[currentPlayer][i] = village;
-	}
-	memcpy(&testG5, &G5, sizeof(struct gameState));
-	cardEffect(adventurer, choice1, choice2, choice3, &testG5, handpos, &bonus);
-	adventurerCardTests(G5, testG5, currentPlayer);
 
-	printf("\n");
 	printf("\n");
 	printf("\n");
 	return 0;
