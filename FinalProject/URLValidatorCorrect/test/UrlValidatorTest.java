@@ -298,5 +298,29 @@ public class UrlValidatorTest extends TestCase {
 		} catch(AssertionError | ExceptionInInitializerError | NoClassDefFoundError a) {
 			System.out.format("FALSE: %s\n", url);
 		}
+		if(constructor_schemes.length > 0) {
+			System.out.format("Constructor information:  schemes: ");
+			for(int i = 0; i < constructor_schemes.length - 1; i++) {
+				System.out.format("%s, ", constructor_schemes[i]);
+			}
+			System.out.format("%s.  ", constructor_schemes[constructor_schemes.length - 1]);
+		}
+		else {
+			System.out.format("Constructor information: options: ");
+			}
+		if(allow2Slashes) {
+			System.out.format("allow 2 slashes ");
+		}
+		if(allowAllSchemes) {
+			System.out.format("allow all schemes ");
+		}
+		if(allowLocalUrls) {
+			System.out.format("allowLocalUrls ");
+		}
+		if(noFragments) {
+			System.out.format("no fragments ");
+		}
+		System.out.println();
+		System.out.println();
 	}
 }
