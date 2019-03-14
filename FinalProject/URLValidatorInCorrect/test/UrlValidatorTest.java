@@ -58,7 +58,7 @@ public class UrlValidatorTest extends TestCase {
 		
 		//unit scheme testing with default constructor
 		//should return true
-		String SchemeTrue[] = {"ftp", "http", "https"};
+		String SchemeTrue[] = {"ftp", "http", "https", "HTTP"};
 		for(int i=0; i<SchemeTrue.length; i++) {
 			try {
 				assertTrue(url_validator_default.isValidScheme(SchemeTrue[i]));
@@ -158,7 +158,7 @@ public class UrlValidatorTest extends TestCase {
 					}
 				}
 				//should return false
-				String PathFalse2Slashes[] = {"//..", "/test123///file"};
+				String PathFalse2Slashes[] = {"//..", "/../test123/.//file"};
 				for(int i=0; i<PathFalse2Slashes.length; i++) {
 					try {
 						assertFalse(url_val_2slashes.isValidPath(PathFalse2Slashes[i]));
