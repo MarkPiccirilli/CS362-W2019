@@ -359,7 +359,7 @@ public class UrlValidator implements Serializable {
             return false;
         }
 
-        if (isOff(ALLOW_ALL_SCHEMES) && !allowedSchemes.contains(scheme) {
+        if (isOff(ALLOW_ALL_SCHEMES) && !allowedSchemes.contains(scheme)) {
             return false;
         }
 
