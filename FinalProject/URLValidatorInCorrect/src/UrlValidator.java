@@ -359,7 +359,7 @@ public class UrlValidator implements Serializable {
             return false;
         }
 
-        if (isOff(ALLOW_ALL_SCHEMES) && !allowedSchemes.contains(scheme.toLowerCase(Locale.ENGLISH))) {
+        if (isOff(ALLOW_ALL_SCHEMES) && !allowedSchemes.contains(scheme) {
             return false;
         }
 
@@ -460,7 +460,7 @@ public class UrlValidator implements Serializable {
         }
         
         int slash2Count = countToken("//", path);
-        if (isOff(ALLOW_2_SLASHES) && (slash2Count > 0)) {
+        if (isOn(ALLOW_2_SLASHES) && (slash2Count > 0)) {
             return false;
         }
 
