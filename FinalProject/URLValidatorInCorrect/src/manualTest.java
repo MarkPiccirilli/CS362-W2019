@@ -7,7 +7,7 @@ public class manualTest {
 		Scanner s = new Scanner(System.in);
 
 		while(true) {
-			System.out.println("Einter URL or type quit: ");
+			System.out.println("Enter URL or type quit: ");
 			String url = s.next();
 			if(url.equals("quit")) {
 				System.out.println("test");

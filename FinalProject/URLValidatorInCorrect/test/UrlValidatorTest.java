@@ -218,10 +218,11 @@ public class UrlValidatorTest extends TestCase {
 		Random rand = new Random();
 		
 		//select random scheme
-		String schemes[] = {"http", "https", "ftp", ""};
-		String scheme = schemes[rand.nextInt(schemes.length)];
+		String testSchemes[] = {"http", "https", "ftp", "", "HTTP", "FTP"};
+		String scheme = testSchemes[rand.nextInt(testSchemes.length)];
 		
 		//select schemes for constructor
+		String schemes[] = {"http", "https", "ftp", ""};
 		boolean arr[] = new boolean[schemes.length];
 		int count = 0;
 		for(int i=0; i<schemes.length; i++) {
@@ -243,19 +244,19 @@ public class UrlValidatorTest extends TestCase {
 		String authority = authorities[rand.nextInt(authorities.length)]; 
 		
 		//select random path
-		String paths[] = {"/test", "/test123", "", "/test/hello"};
+		String paths[] = {"/test", "/test123", "", "/test/hello", "//test"};
 		String path = paths[rand.nextInt(paths.length)];
 		//select random select random query
-		String queries[] = {"", "action=edit", "action=view&mode=down"};
+		String queries[] = {"?", "?action=edit", "?action=view&mode=down"};
 		String query = queries[rand.nextInt(queries.length)];
 		
 		//concatonate strings to build url
 		String url;
 		if(scheme == "") {
-			url = authority + path + "?" + query;
+			url = authority + path + query;
 		}
 		else {
-			url = scheme + "://" + authority + path + "?" + query;
+			url = scheme + "://" + authority + path + query;
 		}
 		//select random options
 		boolean allow2Slashes = rand.nextBoolean();
